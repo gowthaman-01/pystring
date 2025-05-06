@@ -1,6 +1,4 @@
-# pystring
-
-Python-style string manipulation in modern C++.
+# Usage
 
 ## Constructors
 
