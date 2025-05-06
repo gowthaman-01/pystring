@@ -9,10 +9,14 @@
 using gstd::pystring;
 
 void run_pystring_tests() {
-     run_pystring_slice_tests();
-     run_pystring_arithmetic_tests();
-     run_pystring_split_join_tests();
-     run_pystring_strip_tests();
+    run_pystring_slice_tests();
+    run_pystring_arithmetic_tests();
+    run_pystring_split_join_tests();
+    run_pystring_strip_tests();
+    run_pystring_count_tests();
+    run_pystring_starts_ends_with_tests();
+    
+    std::cout << "All tests passed!\n";
 }
 
 void run_pystring_slice_tests() {
@@ -89,11 +93,51 @@ void run_pystring_strip_tests() {
     s.lstrip();
     assert(s.get() == "s");
     
-    pystring s1("s    ");
-    s.rstrip();
-    assert(s.get() == "s");
+    pystring s2("s    ");
+    s2.rstrip();
+    assert(s2.get() == "s");
     
-    pystring s2("    s    ");
-    s.strip();
-    assert(s.get() == "s");
+    pystring s3("    s    ");
+    s3.strip();
+    assert(s3.get() == "s");
 }
+
+void run_pystring_count_tests() {
+    pystring s("banana");
+    assert(s.count("na") == 2);
+
+    pystring s2("hello");
+    assert(s2.count("z") == 0);
+  
+    pystring s3("abc");
+    assert(s3.count("abc") == 1);
+  
+    pystring s4("aaaa");
+    assert(s4.count("aa") == 2);
+   
+    pystring s5("abc");
+    assert(s5.count("") == 0);
+}
+
+void run_pystring_starts_ends_with_tests() {
+    pystring s("hello world");
+    assert(s.starts_with("hello"));
+    assert(!s.starts_with("world"));
+
+    pystring s2("data.csv");
+    assert(s2.ends_with(".csv"));
+    assert(!s2.ends_with(".txt"));
+
+    pystring s3("abcdef");
+    assert(s3.starts_with(""));
+    assert(s3.ends_with(""));
+
+    pystring s4("abc");
+    assert(!s4.starts_with("abcd"));
+    assert(!s4.ends_with("abcd"));
+
+    pystring s5("aaaaa");
+    assert(s5.starts_with("aaa"));
+    assert(s5.ends_with("aaa"));
+}
+

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <string_view>
@@ -146,22 +147,53 @@ pystring pystring::reversed() {
     return pystring(reverse_data);
 }
 
-std::vector<std::string> pystring::split(std::string_view delimiter) {
+int pystring::count(std::string_view substr) const {
+    if (substr.empty()) {
+        return 0;
+    }
+    
+    int count = 0;
+    size_t pos = 0;
+    while (pos < data_.length()) {
+        size_t idx = data_.find(substr, pos);
+        if (idx == std::string::npos) {
+            return count;
+        }
+        ++count;
+        pos = idx + substr.length();
+    }
+    
+    return count;
+}
+
+bool pystring::starts_with(std::string_view substr) const {
+    return data_.find(substr) == 0;
+}
+
+bool pystring::ends_with(std::string_view substr) const {
+    if (substr.length() > data_.length()) {
+        return false;
+    }
+    
+    return std::string_view(data_).substr(data_.size() - substr.size()) == substr;
+}
+
+std::vector<std::string> pystring::split(std::string_view delimiter) const {
     if (delimiter.empty()) {
         return {data_};
     }
     
     std::vector<std::string> v;
     
-    size_t cur{};
-    while (cur < data_.length()) {
-        auto idx = data_.find(delimiter, cur);
+    size_t pos{};
+    while (pos < data_.length()) {
+        auto idx = data_.find(delimiter, pos);
         if (idx == std::string::npos) {
-            v.emplace_back(data_.substr(cur, data_.length() - cur));
+            v.emplace_back(data_.substr(pos, data_.length() - pos));
             break;
         }
-        v.emplace_back(data_.substr(cur, idx - cur));
-        cur = idx + delimiter.length();
+        v.emplace_back(data_.substr(pos, idx - pos));
+        pos = idx + delimiter.length();
     }
     
     return v;

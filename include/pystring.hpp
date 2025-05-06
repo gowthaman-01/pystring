@@ -31,19 +31,23 @@ public:
     pystring operator()(int start_idx = 0,
                         int end_idx = std::numeric_limits<int>::max(),
                         int step = 1);
-    
+  
     std::string get() const;
     size_t length() const;
     size_t size() const;
     void reverse();
     pystring reversed();
-    std::vector<std::string> split(std::string_view delimiter);
+
+    int count(std::string_view substr) const;
+    bool starts_with(std::string_view substr) const;
+    bool ends_with(std::string_view substr) const;
     
     // Whitespace trimming
     void lstrip();
     void rstrip();
     void strip();
     
+    std::vector<std::string> split(std::string_view delimiter) const;
     static pystring join(std::vector<std::string> &v, std::string_view delimiter);
     
 private:
