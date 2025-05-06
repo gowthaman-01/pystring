@@ -6,17 +6,15 @@ A Python-style string manipulation library in modern C++.
 - Negative indices
 - `+`, `*`, `==`, `[]` operators
 - `split()`, `join()`, `strip()`, `startswith()`, `endswith()`, `count()`
-- Prefix/suffix checks: `starts_with()`, `ends_with()`  
-- Substring counting: `count("na")` → `2`  
+- Prefix/suffix checks: `starts_with()`, `ends_with()`
+- Substring counting: `count("na")` → `2`
 
 ## Installation
-
-### Option 1: Add as Subdirectory (Recommended)
 
 1. Clone `pystring` into your own project directory:
 
 ```bash
-git clone https://github.com/gowthaman01/pystring
+git clone https://github.com/gowthaman-01/pystring.git
 ```
 
 2. Your project structure might look like:
@@ -39,28 +37,20 @@ target_link_libraries(my_app PRIVATE pystring::pystring)
 
 > 💡 Replace `my_app` with the name of your own CMake executable target.
 
-### Option 2: Install Globally
+#### ⚠️ Warning
 
-1. Install `pystring` once on your system:
-
-```bash
-git clone https://github.com/gowthaman01/pystring
-cd pystring
-cmake -Bbuild
-cmake --build build
-sudo cmake --install build
-```
-
-2. In the CMakeLists.txt of any project where you want to use pystring, add:
+This library uses modern C++ features like `if constexpr` and `std::is_arithmetic_v`, so you **must** enable C++17 in your project:
 
 ```cmake
-find_package(pystring REQUIRED)
-
-add_executable(my_app main.cpp)
-target_link_libraries(my_app PRIVATE pystring::pystring)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ```
 
-> 💡 Again, replace `my_app` with the name of your own CMake executable target.
+If you don’t, you may get errors like:
+
+```
+error: no template named 'is_arithmetic_v' in namespace 'std'
+```
 
 ## Usage
 
