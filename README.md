@@ -12,7 +12,7 @@ A Python-style string manipulation library in modern C++.
 ### Option 1: Use as Subdirectory (Recommended)
 
 ```bash
-git clone https://github.com/yourusername/pystring
+git clone https://github.com/gowthaman01/pystring
 ```
 
 In your `CMakeLists.txt`:
@@ -25,7 +25,7 @@ target_link_libraries(my_app PRIVATE pystring::pystring)
 ### Option 2: Install Globally
 
 ```bash
-git clone https://github.com/yourusername/pystring
+git clone https://github.com/gowthaman01/pystring
 cd pystring
 cmake -Bbuild
 cmake --build build
