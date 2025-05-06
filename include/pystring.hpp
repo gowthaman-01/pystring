@@ -28,9 +28,11 @@ public:
     pystring operator*=(int multiplier);
     bool operator==(pystring& other);
     pystring operator[](int idx);
-    pystring operator()(int start_idx = 0,
-                        int end_idx = std::numeric_limits<int>::max(),
-                        int step = 1);
+    pystring operator()(
+        int start_idx = 0,
+        int end_idx = std::numeric_limits<int>::max(),
+        int step = 1
+    );
   
     std::string get() const;
     size_t length() const;
