@@ -6,8 +6,6 @@
 #include <iostream>
 #include <vector>
 
-using gstd::pystring;
-
 void run_pystring_tests() {
     run_pystring_slice_tests();
     run_pystring_arithmetic_tests();

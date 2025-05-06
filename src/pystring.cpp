@@ -8,8 +8,6 @@
 #include <string_view>
 #include <utility>
 
-namespace gstd {
-
 namespace {
 
 // Utils
@@ -246,5 +244,3 @@ std::ostream& operator<<(std::ostream& stream, const pystring& ps) {
     stream << ps.get();
     return stream;
 }
-
-} // namespace gstd

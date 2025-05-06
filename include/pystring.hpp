@@ -4,8 +4,6 @@
 #include <type_traits>
 #include <vector>
 
-namespace gstd {
-
 class pystring {
 public:
     pystring();
@@ -58,5 +56,3 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& stream, const pystring& ps);
-
-} // namespace gstd
