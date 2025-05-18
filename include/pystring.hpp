@@ -15,9 +15,7 @@ public:
     // General constructor for all integral and floating point types
     template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
     pystring(T number) {
-        if constexpr (std::is_integral_v<T> || std::is_floating_point_v<T>) {
-            data_ = std::to_string(number);
-        }
+        data_ = std::to_string(number);
     }
     
     pystring operator+(const pystring &other);
