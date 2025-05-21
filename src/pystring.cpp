@@ -37,7 +37,7 @@ pystring pystring::operator+(const pystring &other) {
     return pystring(data_ + other.data_);
 }
 
-pystring pystring::operator+=(const pystring &other) {
+pystring& pystring::operator+=(const pystring &other) {
     data_ += other.data_;
     return *this;
 }
@@ -46,7 +46,7 @@ pystring pystring::operator*(int multipler) {
     return pystring(multiply_string(data_, multipler));
 }
 
-pystring pystring::operator*=(int multipler) {
+pystring& pystring::operator*=(int multipler) {
     data_ = multiply_string(data_, multipler);
     return *this;
 }
@@ -64,61 +64,48 @@ pystring pystring::operator[](int idx) {
     return pystring(data_.at(idx));
 }
 
-pystring pystring::operator()(int start_idx, int end_idx, int step) {
-    // A step of 0 is not allowed
+pystring pystring::operator()(int start, int stop, int step) {
+    // Step of 0 is invalid
     if (step == 0) {
-        return pystring();
-    }
-    
-    int length = static_cast<int>(data_.length());
-    
-    // If no end_idx was provided
-    if (end_idx == std::numeric_limits<int>::max()) {
-         end_idx = length;
-    }
-    
-    // Adjust for negative indices
-    if (start_idx < 0) {
-        start_idx += length;
-    }
-    if (end_idx < 0) {
-        end_idx += length;
-    }
-    if (start_idx > end_idx) {
-        if (step < 0) {
-            std::swap(start_idx, end_idx);
-        } else {
-            // Step is positive, so cannot go backward
-            return pystring();
-        }
-    }
-    
-    // Adjust for out of bound indices
-    start_idx = std::max(start_idx, 0);
-    end_idx = std::min(end_idx, length);
-    
-    std::string temp_str = data_.substr(start_idx, end_idx - start_idx);
-    
-    if (step == 1) {
-        return pystring(temp_str);
-    }
-    if (step == -1) {
-        std::reverse(temp_str.begin(), temp_str.end());
-        return pystring(temp_str);
+        return pystring("");
     }
 
-    int positive_step = std::abs(step);
-    std::string s{};
-    
-    for (int i = start_idx; i < end_idx; i += positive_step) {
-        s += temp_str[i];
+    const int len = static_cast<int>(data_.size());
+
+    if (stop == std::numeric_limits<int>::max()) {
+        stop = step > 0 ? len : -1;
     }
-    
-    if (step < 0) {
-        std::reverse(s.begin(), s.end());
+
+    // Handle negative indices
+    if (start < 0) {
+        start += len;
     }
-    
-    return pystring();
+    if (stop < 0) {
+        stop += len;
+    }
+
+    // Clamp start/stop to valid bounds
+    if (step > 0) {
+        start = std::max(start, 0);
+        stop = std::min(stop, len);
+    } else {
+        start = std::min(start, len - 1);
+        stop = std::max(stop, -1);
+    }
+
+    std::string result;
+
+    if (step > 0) {
+        for (int i = start; i < stop; i += step) {
+            result += data_[i];
+        }
+    } else {
+        for (int i = start; i > stop; i += step) {
+            result += data_[i];
+        }
+    }
+
+    return pystring(result);
 }
 
 // Member functions

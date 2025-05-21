@@ -19,14 +19,14 @@ public:
     }
     
     pystring operator+(const pystring &other);
-    pystring operator+=(const pystring &other);
+    pystring& operator+=(const pystring &other);
     pystring operator*(int multipler);
-    pystring operator*=(int multiplier);
+    pystring& operator*=(int multiplier);
     bool operator==(pystring& other);
     pystring operator[](int idx);
     pystring operator()(
-        int start_idx = 0,
-        int end_idx = std::numeric_limits<int>::max(),
+        int start = 0,
+        int stop = std::numeric_limits<int>::max(),
         int step = 1
     );
   

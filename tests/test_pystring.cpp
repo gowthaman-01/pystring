@@ -8,12 +8,13 @@
 
 void run_pystring_tests() {
     run_pystring_slice_tests();
+    run_pystring_slice_with_step_tests();
     run_pystring_arithmetic_tests();
     run_pystring_split_join_tests();
     run_pystring_strip_tests();
     run_pystring_count_tests();
     run_pystring_starts_ends_with_tests();
-    
+
     std::cout << "All tests passed!\n";
 }
 
@@ -59,6 +60,59 @@ void run_pystring_slice_tests() {
     assert(empty(0, 0).get() == "");
     assert(empty(-1, 0).get() == "");
 }
+
+void run_pystring_slice_with_step_tests() {
+    pystring s("abcdef");
+
+    // Step = 1 (equivalent to normal slicing)
+    assert(s(0, 6, 1).get() == "abcdef");
+    assert(s(1, 5, 1).get() == "bcde");
+
+    // Step = 2
+    assert(s(0, 6, 2).get() == "ace");
+    assert(s(1, 6, 2).get() == "bdf");
+    assert(s(0, 5, 2).get() == "ace");
+    assert(s(1, 5, 2).get() == "bd");
+
+    // Step = 3
+    assert(s(0, 6, 3).get() == "ad");
+
+    // Full reverse
+    assert(s(5, -7, -1).get() == "fedcba");
+    assert(s(5, -10, -1).get() == "fedcba");
+    assert(s(5, std::numeric_limits<int>::min(), -1).get() == "fedcba");
+
+    // Partial reverse
+    assert(s(5, 0, -1).get() == "fedcb");
+    assert(s(4, 1, -1).get() == "edc");
+
+    // Negative step with negative indices
+    assert(s(-1, -7, -1).get() == "fedcba");
+    assert(s(-2, -5, -1).get() == "edc");
+
+    // Out-of-bounds with positive step
+    assert(s(-100, 100, 2).get() == "ace");
+
+    // Out-of-bounds with negative step
+    assert(s(100, -100, -2).get() == "fdb");
+
+    // Edge cases
+    assert(s(2, 2, 1).get() == "");
+    assert(s(4, 2, 1).get() == "");
+    assert(s(2, 2, -1).get() == "");
+    assert(s(2, 4, -1).get() == "");
+    
+    // Step = 0: returns ""
+    assert(s(0, 5, 0).get() == "");
+
+    // Empty string
+    pystring empty("");
+    assert(empty(0, 0, 1).get() == "");
+    assert(empty(0, 0, -1).get() == "");
+    assert(empty(10, -10, 1).get() == "");
+    assert(empty(10, -10, -1).get() == "");
+}
+
 
 void run_pystring_arithmetic_tests() {
     pystring s("a");

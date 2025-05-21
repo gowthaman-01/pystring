@@ -59,44 +59,89 @@ s[-1].get();                                        // "o"
 ```
 
 ## Slicing
-
+### Basic Forward Slicing (`step = 1`)
 ```cpp
-pystring s("abcdef");
+s(0, 3).get();                                      // "abc"     
+s(2, 5).get();                                      // "cde"     
+```
 
-// Basic forward slicing
-s(0, 3).get();                                      // "abc"
-s(2, 5).get();                                      // "cde"
+### Negative Indices
+```cpp
+s(-3, -1).get();                                    // "de"      
+s(-6, -1).get();                                    // "abcde"   
+s(-6, 3).get();                                     // "abc"     
+s(1, -1).get();                                     // "bcde"    
+```
 
-// Negative indices
-s(-3, -1).get();                                    // "de"
-s(-6, -1).get();                                    // "abcde"
-s(-6, 3).get();                                     // "abc"
-s(1, -1).get();                                     // "bcde"
+### Edge Cases (Empty Slices)
+```cpp
+s(2, 2).get();                                      // ""      
+s(4, 2).get();                                      // ""    
+```
 
-// Edge cases
-s(2, 2).get();                                      // "" (start == end)
-s(4, 2).get();                                      // "" (start > end, step > 0)
+### Mixed Signs and Clamping
+```cpp
+s(-4, 5).get();                                     // "cde"   
+s(-100, 3).get();                                   // "abc"  
+s(1, 100).get();                                    // "bcdef"   
+```
 
-// Mixed signs
-s(-4, 5).get();                                     // "cde"
-s(-100, 3).get();                                   // "abc"   (start < 0 clamps to 0)
-s(1, 100).get();                                    // "bcdef" (end > size clamps to size)
-
-// Full slice
+### Full Slice (Entire String)
+```cpp
 s(0, s.length()).get();                             // "abcdef"
 s(-6, s.length()).get();                            // "abcdef"
 s(-6, 6).get();                                     // "abcdef"
+```
 
-// Single character
+### Single-Character String
+```cpp
 pystring single("x");
+
 single(0, 1).get();                                 // "x"
 single(0, 0).get();                                 // ""
 single(-1, 1).get();                                // "x"
+```
 
-// Empty string
+### Empty String
+```cpp
 pystring empty("");
+
 empty(0, 0).get();                                  // ""
 empty(-1, 0).get();                                 // ""
+```
+
+## Slicing with Step
+
+### Forward Step (`step > 1`)
+```cpp
+s(0, 6, 2).get();                                   // "ace"    
+s(1, 6, 2).get();                                   // "bdf"    
+s(0, 5, 2).get();                                   // "ace"
+s(1, 5, 2).get();                                   // "bd"
+s(0, 6, 3).get();                                   // "ad"
+```
+
+### Reverse Step (`step < 0`)
+```cpp
+s(5, -7, -1).get();                                 // "fedcba" 
+s(5, 0, -1).get();                                  // "fedcb"  
+s(4, 1, -1).get();                                  // "edc"  
+s(-1, -7, -1).get();                                // "fedcba"
+s(-2, -5, -1).get();                                // "edc"
+```
+
+### Edge Cases with Step
+```cpp
+s(2, 2, 1).get();                                   // ""      
+s(2, 2, -1).get();                                  // ""      
+s(2, 4, -1).get();                                  // ""        
+s(4, 2, -1).get();                                  // "ed"     
+```
+
+### Out-of-Bounds Step Slices
+```cpp
+s(-100, 100, 2).get();                              // "ace"     
+s(100, -100, -2).get();                             // "fdb"   
 ```
 
 ## Methods
