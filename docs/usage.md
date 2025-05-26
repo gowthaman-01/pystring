@@ -219,6 +219,18 @@ s.upper().get();                                    // "HELLO WORLD"
 s.lower().get();                                    // "hello world"
 ```
 
+### Arithmetic Conversions
+
+Note: If the string does not contain a valid number (e.g., "abc"), calling these methods will throw std::invalid_argument.
+
+```cpp
+pystring s("42");
+int x = s.to_int();                                 // 42
+
+pystring s("3.14");
+double d = s.to_double();                           // 3.14
+```
+
 ## Trimming
 
 ```cpp
