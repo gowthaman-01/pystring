@@ -14,6 +14,9 @@ void run_pystring_tests() {
     run_pystring_strip_tests();
     run_pystring_count_tests();
     run_pystring_starts_ends_with_tests();
+    run_pystring_contains_tests();
+    run_pystring_find_tests();
+    run_pystring_case_conversion_tests();
 
     std::cout << "All tests passed!\n";
 }
@@ -192,4 +195,40 @@ void run_pystring_starts_ends_with_tests() {
     assert(s5.starts_with("aaa"));
     assert(s5.ends_with("aaa"));
 }
+
+void run_pystring_contains_tests() {
+    pystring s("hello world");
+    assert(s.contains("hello"));
+    assert(s.contains("world"));
+    assert(s.contains("lo wo"));
+    assert(!s.contains("planet"));
+    assert(!s.contains("hello world!"));
+    assert(s.contains(""));                 // empty substring always returns true
+}
+
+void run_pystring_find_tests() {
+    pystring s("hello world");
+
+    assert(s.find("hello") == 0);
+    assert(s.find("world") == 6);
+    assert(s.find("lo") == 3);
+    assert(s.find("planet") == std::string::npos);
+    assert(s.find("") == 0);                // consistent with std::string behavior
+}
+
+void run_pystring_case_conversion_tests() {
+    pystring s1("Hello World");
+    assert(s1.upper().get() == "HELLO WORLD");
+    assert(s1.lower().get() == "hello world");
+
+    pystring s2("123abc!");
+    assert(s2.upper().get() == "123ABC!");
+    assert(s2.lower().get() == "123abc!");
+
+    pystring empty("");
+    assert(empty.upper().get() == "");
+    assert(empty.lower().get() == "");
+}
+
+
 

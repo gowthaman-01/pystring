@@ -22,7 +22,7 @@ public:
     pystring& operator+=(const pystring &other);
     pystring operator*(int multipler);
     pystring& operator*=(int multiplier);
-    bool operator==(pystring& other);
+    bool operator==(const pystring& other) const;
     pystring operator[](int idx);
     pystring operator()(
         int start = 0,
@@ -39,6 +39,14 @@ public:
     int count(std::string_view substr) const;
     bool starts_with(std::string_view substr) const;
     bool ends_with(std::string_view substr) const;
+    int find(std::string_view substr) const;
+    bool contains(std::string_view substr) const;
+    
+    int to_int() const;
+    int to_double() const;
+    
+    pystring upper() const;
+    pystring lower() const;
     
     // Whitespace trimming
     void lstrip();

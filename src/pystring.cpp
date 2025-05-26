@@ -51,8 +51,20 @@ pystring& pystring::operator*=(int multipler) {
     return *this;
 }
 
-bool pystring::operator==(pystring &other) {
+bool pystring::operator==(const pystring &other) const {
     return data_ == other.data_;
+}
+
+pystring pystring::upper() const {
+    std::string result = data_;
+    std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+    return pystring(result);
+}
+
+pystring pystring::lower() const {
+    std::string result = data_;
+    std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return pystring(result);
 }
 
 pystring pystring::operator[](int idx) {
@@ -161,6 +173,22 @@ bool pystring::ends_with(std::string_view substr) const {
     }
     
     return std::string_view(data_).substr(data_.size() - substr.size()) == substr;
+}
+
+int pystring::find(std::string_view substr) const {
+    return static_cast<int>(data_.find(substr));
+}
+
+bool pystring::contains(std::string_view substr) const {
+    return data_.find(substr) != std::string::npos;
+}
+
+int pystring::to_int() const {
+    return std::stoi(data_);
+}
+
+int pystring::to_double() const {
+    return std::stod(data_);
 }
 
 std::vector<std::string> pystring::split(std::string_view delimiter) const {

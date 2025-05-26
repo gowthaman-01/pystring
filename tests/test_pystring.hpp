@@ -9,4 +9,7 @@ void run_pystring_strip_tests();
 void run_pystring_count_tests();
 void run_pystring_starts_ends_with_tests();
 void run_pystring_slice_with_step_tests();
+void run_pystring_contains_tests();
+void run_pystring_find_tests();
+void run_pystring_case_conversion_tests();
 
