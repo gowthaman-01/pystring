@@ -17,6 +17,7 @@ void run_pystring_tests() {
     run_pystring_contains_tests();
     run_pystring_find_tests();
     run_pystring_case_conversion_tests();
+    run_pystring_conversion_tests();
 
     std::cout << "All tests passed!\n";
 }
@@ -228,6 +229,26 @@ void run_pystring_case_conversion_tests() {
     pystring empty("");
     assert(empty.upper().get() == "");
     assert(empty.lower().get() == "");
+}
+
+void run_pystring_conversion_tests() {
+    // Valid integer strings
+    assert(pystring("42").to_int() == 42);
+    assert(pystring("-7").to_int() == -7);
+    assert(pystring("0009").to_int() == 9);
+
+    // Valid floating point strings
+    assert(pystring("3.14").to_double() == 3.14);
+    assert(pystring("-2.5").to_double() == -2.5);
+    assert(pystring("0.0").to_double() == 0.0);
+
+    // Scientific notation
+    assert(pystring("1e2").to_double() == 100.0);
+    assert(pystring("-1.5e1").to_double() == -15.0);
+
+    // Edge cases
+    assert(pystring("0").to_int() == 0);
+    assert(pystring("0.0001").to_double() == 0.0001);
 }
 
 

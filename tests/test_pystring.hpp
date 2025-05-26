@@ -12,4 +12,5 @@ void run_pystring_slice_with_step_tests();
 void run_pystring_contains_tests();
 void run_pystring_find_tests();
 void run_pystring_case_conversion_tests();
+void run_pystring_conversion_tests();
 

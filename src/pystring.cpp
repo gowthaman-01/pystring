@@ -187,7 +187,7 @@ int pystring::to_int() const {
     return std::stoi(data_);
 }
 
-int pystring::to_double() const {
+double pystring::to_double() const {
     return std::stod(data_);
 }
 

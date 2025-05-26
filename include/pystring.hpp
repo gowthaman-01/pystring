@@ -43,7 +43,7 @@ public:
     bool contains(std::string_view substr) const;
     
     int to_int() const;
-    int to_double() const;
+    double to_double() const;
     
     pystring upper() const;
     pystring lower() const;
